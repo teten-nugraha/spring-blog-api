@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -27,6 +24,19 @@ public class CategoryController {
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
+    @GetMapping("")
+    public ResponseEntity<?> findAll() {
+
+        Iterable<Category> list = categoryService.findAll();
+
+        return SuccessResponse.response(
+                list,
+                Status.GET_ALL,
+                ""
+        );
+
+    }
+
     @PostMapping("")
     public ResponseEntity<?> createNewCategory(@Valid @RequestBody Category category, BindingResult result) {
 
@@ -36,7 +46,7 @@ public class CategoryController {
 
         Category category1 = categoryService.saveOrUpdateCategory(category);
 
-        return SuccessResponse.created(
+        return SuccessResponse.response(
                 category1,
                 Status.CREATED,
                 "Berhasil menambahkan kategori baru"

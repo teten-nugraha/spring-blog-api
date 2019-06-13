@@ -17,5 +17,9 @@ public class CategoryService {
 
     }
 
+    public Iterable<Category> findAll() {
+        return categoryRepository.findAll();
+    }
+
 
 }
