@@ -45,6 +45,7 @@ public class Post {
     private Category category;
 
     @JsonFormat(pattern = "yyyy-mm-dd")
+    @Column(nullable = true)
     private Date published_At;
 
     @JsonFormat(pattern = "yyyy-mm-dd")
