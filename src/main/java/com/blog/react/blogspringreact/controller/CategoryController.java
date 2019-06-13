@@ -1,6 +1,7 @@
 package com.blog.react.blogspringreact.controller;
 
 import com.blog.react.blogspringreact.entity.Category;
+import com.blog.react.blogspringreact.response.SuccessResponse;
 import com.blog.react.blogspringreact.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class CategoryController {
 
         Category category1 = categoryService.saveOrUpdateCategory(category);
 
-        return new ResponseEntity<Category>(category1, HttpStatus.CREATED);
+        return SuccessResponse.created(category1, "CREATED", "Berhasil menambahkan kategori baru");
 
     }
 
