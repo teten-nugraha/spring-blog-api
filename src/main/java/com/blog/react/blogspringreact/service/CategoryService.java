@@ -1,6 +1,7 @@
 package com.blog.react.blogspringreact.service;
 
 import com.blog.react.blogspringreact.entity.Category;
+import com.blog.react.blogspringreact.exception.CategoryIdException;
 import com.blog.react.blogspringreact.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,11 @@ public class CategoryService {
 
     public Category saveOrUpdateCategory(Category category){
 
-        return categoryRepository.save(category);
+        try{
+            return categoryRepository.save(category);
+        }catch (Exception e) {
+            throw new CategoryIdException("Project ID '"+category.getCategoryIdentifier()+"' already exists");
+        }
 
     }
 
