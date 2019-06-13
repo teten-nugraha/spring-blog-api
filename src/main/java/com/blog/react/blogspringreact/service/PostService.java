@@ -1,9 +1,13 @@
 package com.blog.react.blogspringreact.service;
 
+import com.blog.react.blogspringreact.entity.Category;
 import com.blog.react.blogspringreact.entity.Post;
+import com.blog.react.blogspringreact.repository.CategoryRepository;
 import com.blog.react.blogspringreact.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -11,10 +15,19 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
-    public Post saveOrUpdatePost(Post post) {
+    @Autowired
+    private CategoryRepository categoryRepository;
 
-        return postRepository.save(post);
 
+    public Post saveOrUpdatePost(String catIdentifier,Post post) {
+
+        Category category = categoryRepository.findByCategoryIdentifier(catIdentifier);
+
+        if(category != null ) {
+            post.setCategory(category);
+            return postRepository.save(post);
+        }
+        return null;
     }
 
 

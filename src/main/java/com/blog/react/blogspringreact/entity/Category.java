@@ -36,13 +36,6 @@ public class Category {
     @JsonProperty("description")
     private String description;
 
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "category"
-    )
-    private List<Post> posts = new ArrayList<>();
-
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date created_At;
 

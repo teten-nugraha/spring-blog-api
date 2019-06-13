@@ -1,6 +1,7 @@
 package com.blog.react.blogspringreact.repository;
 
 import com.blog.react.blogspringreact.entity.Post;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
