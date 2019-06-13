@@ -33,7 +33,7 @@ public class CategoryService {
     public void deleteCategory(String identifier) {
 
         categoryRepository.delete(findByCategoryIdentifier(identifier));
-        
+
     }
 
 
