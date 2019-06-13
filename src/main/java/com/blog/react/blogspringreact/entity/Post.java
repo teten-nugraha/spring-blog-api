@@ -8,40 +8,44 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Data
 @ToString
-public class Category {
+public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Category Identifier is required")
-    @Size(min = 4, max = 5,message = "Please use 4 to 10 caracter")
-    @Column(updatable = false,unique = true)
-    @JsonProperty("categoryIdentifier")
-    private String categoryIdentifier;
-
-    @NotBlank(message = "Project name is required")
+    @NotBlank(message = "Identifier cannot blank")
+    @JsonProperty("identifier")
     @Column(unique = true)
-    @JsonProperty("name")
-    private String name;
+    private String identifier;
 
-    @NotBlank(message = "Description is required")
-    @JsonProperty("description")
-    private String description;
+    @NotBlank(message = "Title cannot blank")
+    @JsonProperty("title")
+    @Column(unique = true)
+    @Size(min = 5, max = 20, message = "Please fill between 5 to 20 character")
+    private String title;
 
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "category"
+    @NotBlank(message = "Content cannot be blank")
+    @JsonProperty("content")
+    private String content;
+
+    @ManyToOne(
+        fetch = FetchType.EAGER,
+        cascade = CascadeType.REFRESH
     )
-    private List<Post> posts = new ArrayList<>();
+    @JoinColumn(
+        name = "category_id",
+        nullable = false
+    )
+    private Category category;
+
+    @JsonFormat(pattern = "yyyy-mm-dd")
+    private Date published_At;
 
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date created_At;
@@ -59,6 +63,6 @@ public class Category {
         this.updated_At = new Date();
     }
 
-    public Category() {
+    public Post() {
     }
 }
