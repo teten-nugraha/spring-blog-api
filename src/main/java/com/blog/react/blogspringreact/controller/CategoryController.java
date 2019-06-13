@@ -1,8 +1,11 @@
 package com.blog.react.blogspringreact.controller;
 
 import com.blog.react.blogspringreact.entity.Category;
+import com.blog.react.blogspringreact.response.ErrorResponse;
 import com.blog.react.blogspringreact.response.SuccessResponse;
 import com.blog.react.blogspringreact.service.CategoryService;
+import com.blog.react.blogspringreact.service.MapValidationErrorService;
+import com.blog.react.blogspringreact.util.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +24,23 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private MapValidationErrorService mapValidationErrorService;
+
     @PostMapping("")
     public ResponseEntity<?> createNewCategory(@Valid @RequestBody Category category, BindingResult result) {
 
+        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
+        if(errorMap != null ) return ErrorResponse.error(errorMap.getBody(), Status.ERROR,errorMap.getStatusCode().toString(), errorMap.getStatusCodeValue());
+
+
         Category category1 = categoryService.saveOrUpdateCategory(category);
 
-        return SuccessResponse.created(category1, "CREATED", "Berhasil menambahkan kategori baru");
+        return SuccessResponse.created(
+                category1,
+                Status.CREATED,
+                "Berhasil menambahkan kategori baru"
+        );
 
     }
 
