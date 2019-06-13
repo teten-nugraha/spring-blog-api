@@ -5,6 +5,8 @@ import com.blog.react.blogspringreact.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CategoryService {
 
@@ -19,6 +21,19 @@ public class CategoryService {
 
     public Iterable<Category> findAll() {
         return categoryRepository.findAll();
+    }
+
+    public Category findByCategoryIdentifier(String identifier) {
+
+        Category categoryIdentifier = categoryRepository.findByCategoryIdentifier(identifier);
+
+        return categoryIdentifier;
+    }
+
+    public void deleteCategory(String identifier) {
+
+        categoryRepository.delete(findByCategoryIdentifier(identifier));
+        
     }
 
 

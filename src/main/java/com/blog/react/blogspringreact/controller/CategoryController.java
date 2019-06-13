@@ -54,5 +54,17 @@ public class CategoryController {
 
     }
 
+    @DeleteMapping("/{categoryIdentifier}")
+    public ResponseEntity<?> deleteCategory(@PathVariable String categoryIdentifier) {
+
+        categoryService.deleteCategory(categoryIdentifier);
+
+        return SuccessResponse.response(
+            null,
+                Status.DELETE,
+                "Berhasil menghapus data category"
+        );
+    }
+
 
 }
