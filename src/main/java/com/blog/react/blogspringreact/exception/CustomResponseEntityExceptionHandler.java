@@ -20,6 +20,14 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 
         return ErrorResponse.error(exceptionResponse, Status.ERROR,null, null);
 
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<?> handlePostIdAlreadyExistsException(PostIdException ex, WebRequest request) {
+
+        PostIdExceptionResponse exceptionResponse = new PostIdExceptionResponse(ex.getMessage());
+
+        return ErrorResponse.error(exceptionResponse, Status.ERROR,null, null);
 
     }
 }
