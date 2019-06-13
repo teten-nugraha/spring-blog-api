@@ -48,7 +48,7 @@ public class PostService {
 
     }
 
-    public void deleteProject(String identifier){
+    public void deletePost(String identifier){
 
         Post post = postRepository.findPostByIdentifier(identifier);
 

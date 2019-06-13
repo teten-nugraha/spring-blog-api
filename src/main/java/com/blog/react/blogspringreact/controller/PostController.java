@@ -54,4 +54,16 @@ public class PostController {
 
     }
 
+    @DeleteMapping("/{postIdentifier}")
+    public ResponseEntity<?> deleteCategory(@PathVariable String postIdentifier) {
+
+        postService.deletePost(postIdentifier);
+
+        return SuccessResponse.response(
+                null,
+                Status.DELETE,
+                "Berhasil menghapus data post"
+        );
+    }
+
 }
