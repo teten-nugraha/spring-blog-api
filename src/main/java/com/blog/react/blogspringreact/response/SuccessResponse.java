@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class SuccessResponse {
 
-    private static final String[] statuses = new String[]{Status.CREATED, Status.GET_ALL, Status.DELETE};
+    private static final String[] statuses = new String[]{Status.CREATED, Status.GET_ALL, Status.DELETE, Status.GET_ONE};
     private static List<String> listStatus = Arrays.asList(statuses);
 
     public static ResponseEntity<?> response(Object value, String status , String message) {

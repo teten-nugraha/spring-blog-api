@@ -37,6 +37,19 @@ public class CategoryController {
 
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
+
+        Category category = categoryService.findById(id);
+
+        return SuccessResponse.response(
+            category,
+            Status.GET_ONE,
+            ""
+        );
+
+    }
+
     @PostMapping("")
     public ResponseEntity<?> createNewCategory(@Valid @RequestBody Category category, BindingResult result) {
 

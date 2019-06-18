@@ -37,6 +37,19 @@ public class PostController {
 
     }
 
+    @GetMapping(value = "/{catIdentifier}")
+    public ResponseEntity<?> getPostByIdentifer(@PathVariable(value="catIdentifier")String catIdentifier){
+
+        Post post = postService.findByProjectIdentifier(catIdentifier);
+
+        return SuccessResponse.response(
+          post,
+          Status.GET_ONE,
+                ""
+        );
+
+    }
+
 
     @PostMapping("/{catIdentifier}")
     public ResponseEntity<?> saveOrUpdate(@PathVariable(value="catIdentifier")String catIdentifier, @Valid @RequestBody  Post post, BindingResult result) {

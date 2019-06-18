@@ -35,6 +35,10 @@ public class CategoryService {
         return categoryIdentifier;
     }
 
+    public Category findById(Long id) {
+        return categoryRepository.findById(id).orElse(null);
+    }
+
     public void deleteCategory(String identifier) {
 
         categoryRepository.delete(findByCategoryIdentifier(identifier));
