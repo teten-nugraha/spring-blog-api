@@ -7,11 +7,14 @@ import com.blog.react.blogspringreact.service.CommentService;
 import com.blog.react.blogspringreact.service.MapValidationErrorService;
 import com.blog.react.blogspringreact.util.Status;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/api/posts")
@@ -22,6 +25,19 @@ public class CommentController {
 
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
+
+    @GetMapping("/{postId}/comments")
+    public ResponseEntity<?> findAll(@PathVariable("postId")Long postId, Pageable pageable) {
+
+        Page<Comment> comments = commentService.findAll(postId, pageable);
+
+        return SuccessResponse.response(
+                comments,
+                Status.GET_ALL,
+                ""
+        );
+
+    }
 
     @PostMapping("/{postId}/comments")
     public ResponseEntity<?> createOrUpdate(@PathVariable("postId")Long postId, @Valid @RequestBody Comment comment, BindingResult result) {
@@ -34,7 +50,7 @@ public class CommentController {
         return SuccessResponse.response(
                 comment1,
                 Status.CREATED,
-                "Berhasil membuat post baru"
+                "Berhasil membuat comment baru"
         );
 
 

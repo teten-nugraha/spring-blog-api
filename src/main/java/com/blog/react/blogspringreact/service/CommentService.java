@@ -5,7 +5,11 @@ import com.blog.react.blogspringreact.exception.ResourceNotFoundException;
 import com.blog.react.blogspringreact.repository.CommentRepository;
 import com.blog.react.blogspringreact.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CommentService {
@@ -16,7 +20,14 @@ public class CommentService {
     @Autowired
     private PostRepository postRepository;
 
+    public Page<Comment> findAll(Long postId, Pageable pageable) {
 
+        return postRepository.findById(postId).map(post -> {
+            return commentRepository.findByPostId(postId, pageable);
+        }).orElseThrow(() -> new ResourceNotFoundException("PostId " + postId + " not found"));
+
+
+    }
 
     public Comment createComment(Long postId, Comment comment) {
 
