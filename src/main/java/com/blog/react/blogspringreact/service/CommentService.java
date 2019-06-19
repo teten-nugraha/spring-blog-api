@@ -38,4 +38,14 @@ public class CommentService {
 
     }
 
+    public void deleteComment(Long postId, Long commentId) {
+
+
+        Comment comment = commentRepository.findById(commentId).orElseThrow(null);
+
+        commentRepository.delete(comment);
+
+
+    }
+
 }
