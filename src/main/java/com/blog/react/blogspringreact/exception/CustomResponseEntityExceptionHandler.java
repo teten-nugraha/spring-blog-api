@@ -36,7 +36,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 
         ResourceNotFoundExceptionResponse resourceNotFoundException = new ResourceNotFoundExceptionResponse(ex.getMessage());
 
-        return ErrorResponse.error(resourceNotFoundException, Status.ERROR,null, null);
+        return ErrorResponse.error(resourceNotFoundException, Status.ERROR,null, 401);
 
     }
 
