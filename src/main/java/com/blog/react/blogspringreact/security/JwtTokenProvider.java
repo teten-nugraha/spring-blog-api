@@ -12,14 +12,9 @@ import java.util.Map;
 @Component
 public class JwtTokenProvider {
 
-    /**
-     * Geenrate Token ketika login berhasil
-     *
-     * @param authentication
-     * @return
-     */
+    // generate the token
     public String generateToken(Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
+        User user = (User)authentication.getPrincipal();
         Date now = new Date(System.currentTimeMillis());
 
         Date expiryDate = new Date(now.getTime()+SecurityConstants.EXPIRES_TIME);
@@ -28,8 +23,8 @@ public class JwtTokenProvider {
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("id",(Long.toString(user.getId())));
-        claims.put("username",user.getUsername());
-        claims.put("fulName",user.getFullname());
+        claims.put("username", user.getUsername());
+        claims.put("fullName", user.getFullname());
 
         return Jwts.builder()
                 .setSubject(userId)
@@ -38,15 +33,9 @@ public class JwtTokenProvider {
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET)
                 .compact();
-
     }
 
-    /**
-     * Memvalidasi TOken
-     *
-     * @param token
-     * @return
-     */
+    // validate the token
     public boolean validateToken(String token) {
         try{
             Jwts.parser().setSigningKey(SecurityConstants.SECRET).parseClaimsJws(token);
@@ -66,15 +55,10 @@ public class JwtTokenProvider {
         return false;
     }
 
-    /**
-     * get Id from token
-     *
-     * @param token
-     * @return
-     */
+    // get user id from token
     public Long getUserIdFromJWT(String token) {
         Claims claims = Jwts.parser().setSigningKey(SecurityConstants.SECRET).parseClaimsJws(token).getBody();
-        String id = (String) claims.get("id");
+        String id = (String)claims.get("id");
 
         return Long.parseLong(id);
     }

@@ -7,5 +7,6 @@ public class Status {
     public static String GET_ALL = "get_all";
     public static String GET_ONE = "get_one";
     public static String DELETE = "delete";
+    public static String SUCCESS = "success";
 
 }

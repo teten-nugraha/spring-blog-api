@@ -24,6 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 )
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+
     @Autowired
     private JwtAuthenticationEntryPoint unauthorizeHandler;
 
@@ -72,6 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 )
                 .permitAll()
                 .antMatchers(SecurityConstants.SIGN_UP_URLS).permitAll()
+                .antMatchers(SecurityConstants.H2_URL).permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(
@@ -80,3 +82,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         );
     }
 }
+

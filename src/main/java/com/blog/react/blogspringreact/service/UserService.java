@@ -17,6 +17,7 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+
     public User saveUser(User newUser) {
         try{
 
@@ -29,6 +30,5 @@ public class UserService {
             throw new UsernameAlreadyExistsException("Username '"+newUser.getUsername()+"' already exists");
         }
     }
-
 
 }
