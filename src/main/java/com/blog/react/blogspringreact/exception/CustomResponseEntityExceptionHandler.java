@@ -30,4 +30,14 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         return ErrorResponse.error(exceptionResponse, Status.ERROR,null, null);
 
     }
+
+    @ExceptionHandler
+    public final ResponseEntity<?> handleNotFound(ResourceNotFoundException ex, WebRequest request) {
+
+        ResourceNotFoundExceptionResponse resourceNotFoundException = new ResourceNotFoundExceptionResponse(ex.getMessage());
+
+        return ErrorResponse.error(resourceNotFoundException, Status.ERROR,null, null);
+
+    }
+
 }
